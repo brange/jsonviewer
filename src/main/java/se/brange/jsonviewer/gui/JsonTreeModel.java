@@ -6,9 +6,9 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import se.brange.jsonviewer.se.brange.jsonviewer.json.JSONHelper;
-import se.brange.jsonviewer.se.brange.jsonviewer.json.JSONHolder;
-import se.brange.jsonviewer.se.brange.jsonviewer.json.JSONValue;
+import se.brange.jsonviewer.json.JSONHelper;
+import se.brange.jsonviewer.json.JSONHolder;
+import se.brange.jsonviewer.json.JSONValue;
 
 public class JsonTreeModel implements TreeModel {
     private Object rootObject;

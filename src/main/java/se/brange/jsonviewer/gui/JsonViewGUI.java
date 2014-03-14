@@ -17,8 +17,7 @@ import org.json.JSONObject;
 import org.netbeans.swing.outline.DefaultOutlineModel;
 import org.netbeans.swing.outline.Outline;
 import org.netbeans.swing.outline.OutlineModel;
-import se.brange.jsonviewer.se.brange.jsonviewer.json.JSONHolder;
-import sun.tools.jconsole.CreateMBeanDialog;
+import se.brange.jsonviewer.json.JSONHolder;
 
 public class JsonViewGUI extends JFrame {
 

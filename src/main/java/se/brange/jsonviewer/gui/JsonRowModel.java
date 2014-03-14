@@ -3,8 +3,8 @@ package se.brange.jsonviewer.gui;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.netbeans.swing.outline.RowModel;
-import se.brange.jsonviewer.se.brange.jsonviewer.json.JSONHelper;
-import se.brange.jsonviewer.se.brange.jsonviewer.json.JSONValue;
+import se.brange.jsonviewer.json.JSONHelper;
+import se.brange.jsonviewer.json.JSONValue;
 
 public class JsonRowModel implements RowModel {
     @Override
