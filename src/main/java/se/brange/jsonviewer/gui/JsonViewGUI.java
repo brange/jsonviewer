@@ -1,17 +1,22 @@
 package se.brange.jsonviewer.gui;
 
+import java.awt.Component;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.EventObject;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JViewport;
+import javax.swing.event.CellEditorListener;
+import javax.swing.table.TableCellEditor;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.netbeans.swing.outline.DefaultOutlineModel;
@@ -54,7 +59,19 @@ public class JsonViewGUI extends JFrame {
             button1 = new JButton();
             button2 = new JButton();
             button3 = new JButton();
-            currentJson = new JSONObject().put("obj2", new JSONObject().put("hejsan", "ok")).put("hej2", "jadå");
+            currentJson = new JSONObject() {{
+                put("oneString", "This is my String, my string is amazing.");
+                put("anotherString", "Look at my String..");
+                put("isMyStringAmazing", true);
+                put("howAmazing", 57);
+                put("myList",
+                    new JSONArray() {{
+                        put("hello");
+                        put("How are you");
+                        put("Im fine");
+                    }});
+            }};
+            updateTextAreaText();
 
 
             outputScrollPane = new JScrollPane();
@@ -76,39 +93,40 @@ public class JsonViewGUI extends JFrame {
 
                 @Override
                 public void keyPressed(KeyEvent keyEvent) {
-                    if (keyEvent.getKeyCode() == 10) {
-                        String json = inputArea.getText();
-                        if (json != null) {
-                            if (json.startsWith("{")) {
-                                JSONObject jsonObject = new JSONObject(json);
-                                System.out.println("jsonObject = " + jsonObject.toString(2));
-                                updateOutline(jsonObject);
-                            } else if (json.startsWith("[")) {
-                                JSONArray jsonArray = new JSONArray(json);
-                                System.out.println("jsonArray = " + jsonArray.toString(2));
-                                updateOutline(jsonArray);
-                            } else {
-                                System.out.println("error, not a JSONObjec/JSONArray '" + json + "'.");
-                                // TODO: Warn, not a JSONObject and not a JSONArray.
-                            }
-                        }
-                    } else {
-                        System.out.println("keyEvent.getModifiers() = " + keyEvent.getModifiers());
-                        System.out.println("keyEvent.getKeyCode() = " + keyEvent.getKeyCode());
-                    }
                 }
 
                 @Override
-                public void keyReleased(KeyEvent keyEvent) {}
+                public void keyReleased(KeyEvent keyEvent) {
+                    String json = inputArea.getText();
+                    if (json != null) {
+                        if (json.startsWith("{")) {
+                            JSONObject jsonObject = new JSONObject(json);
+                            System.out.println("jsonObject = " + jsonObject.toString(2));
+                            updateOutline(jsonObject);
+                        } else if (json.startsWith("[")) {
+                            JSONArray jsonArray = new JSONArray(json);
+                            System.out.println("jsonArray = " + jsonArray.toString(2));
+                            updateOutline(jsonArray);
+                        } else {
+                            System.out.println("error, not a JSONObjec/JSONArray '" + json + "'.");
+                            // TODO: Warn, not a JSONObject and not a JSONArray.
+                        }
+                    }
+                }
+
             });
         }
     }
 
     private void updateOutline(Object jsonObject) {
         this.currentJson = jsonObject;
-        OutlineModel outlineModel =  DefaultOutlineModel.createOutlineModel(new JsonTreeModel(new JSONHolder("ROOT", jsonObject)), new JsonRowModel(), false, "Key");
-        Outline rootOutline = new Outline(outlineModel);
+        OutlineModel outlineModel =  DefaultOutlineModel.createOutlineModel(new JsonTreeModel(new JSONHolder("ROOT", jsonObject)), new JsonRowModel(this), false, "Key");
+        Outline rootOutline = new Outline(outlineModel);;
         viewPort.add(rootOutline);
     }
 
+
+    public void updateTextAreaText() {
+        inputArea.setText(((JSONObject)currentJson).toString(4));
+    }
 }

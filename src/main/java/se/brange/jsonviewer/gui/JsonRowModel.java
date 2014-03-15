@@ -7,6 +7,16 @@ import se.brange.jsonviewer.json.JSONHelper;
 import se.brange.jsonviewer.json.JSONValue;
 
 public class JsonRowModel implements RowModel {
+
+    private final int COLUMN_TYPE = 1;
+    private final int COLUMN_VALUE = 0;
+
+    private JsonViewGUI gui;
+
+    public JsonRowModel(JsonViewGUI gui) {
+        this.gui = gui;
+    }
+
     @Override
     public int getColumnCount() {
         return 2;
@@ -14,13 +24,13 @@ public class JsonRowModel implements RowModel {
 
     @Override
     public Object getValueFor(Object node, int column) {
-        if (column == 0) {
+        if (column == COLUMN_TYPE) {
             return JSONHelper.getStringValue(node);
-        } else if (column == 1) {
+        } else if (column == COLUMN_VALUE) {
             if (node instanceof JSONValue) {
                 return ((JSONValue) node).getValue();
             }
-            return node.toString() + " ..";
+            return "";
         } else {
             return "wh000t column=" + column;
         }
@@ -28,7 +38,7 @@ public class JsonRowModel implements RowModel {
 
     @Override
     public Class getColumnClass(int column) {
-        if (column == 0) {
+        if (column == COLUMN_TYPE) {
             return JSONObject.class;
         } else {
             return String.class;
@@ -37,14 +47,11 @@ public class JsonRowModel implements RowModel {
 
     @Override
     public boolean isCellEditable(Object node, int column) {
-        return column == 1;
+        return column == COLUMN_VALUE && node instanceof JSONValue;
     }
 
     @Override
     public void setValueFor(Object node, int column, Object value) {
-        System.out.println("se.brange.jsonviewer.gui.JsonRowModel.setValueFor");
-        System.out.println("node = " + node + ", node.class=" + node.getClass());
-        System.out.println("value = " + value + ", value.class=" + value.getClass());
         if (node instanceof JSONValue) {
             JSONValue jsonValue = (JSONValue) node;
 
@@ -85,11 +92,12 @@ public class JsonRowModel implements RowModel {
             }
         }
 
+        gui.updateTextAreaText();
     }
 
     @Override
     public String getColumnName(int column) {
-        if (column==0) {
+        if (column==COLUMN_TYPE) {
             return "Type";
         }
         return "Value";

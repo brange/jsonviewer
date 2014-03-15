@@ -16,7 +16,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="hallå"/>
+          <text value=""/>
         </properties>
       </component>
       <hspacer id="499e4">
