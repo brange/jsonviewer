@@ -82,13 +82,11 @@ public class JsonRowModel implements RowModel {
             if (jsonValue.getParent() instanceof JSONObject) {
                 final JSONObject jsonObject = (JSONObject) jsonValue.getParent();
                 jsonObject.put(jsonValue.getKey(), value);
-                System.out.println("putting in object");
             } else if (jsonValue.getParent() instanceof JSONArray) {
                 final JSONArray jsonArray = (JSONArray) jsonValue.getParent();
                 jsonArray.put(jsonValue.getIndex(), value);
-                System.out.println("putting in array");
             } else {
-                System.out.println(jsonValue.getParent().getClass());
+                System.out.println("whoot, parent.class=" + jsonValue.getParent().getClass());
             }
         }
 

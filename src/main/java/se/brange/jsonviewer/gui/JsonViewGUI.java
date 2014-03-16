@@ -20,7 +20,6 @@ import javax.swing.text.StyleConstants;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.netbeans.swing.outline.DefaultOutlineModel;
 import org.netbeans.swing.outline.Outline;
 import org.netbeans.swing.outline.OutlineModel;
 import se.brange.jsonviewer.json.JSONHolder;
@@ -119,13 +118,13 @@ public class JsonViewGUI extends JFrame {
                             inputLabel.setToolTipText(message);
                             inputLabel.setForeground(Color.RED);
                             Pattern pattern = Pattern.compile("(.*)at ([0-9]+) \\[character ([0-9]+) line ([0-9]+)\\](.*)");                            Matcher matcher = pattern.matcher(message);
-                            if (matcher != null && matcher.matches()) {
+                            if (matcher.matches()) {
                                 String absoluteCharacter = matcher.group(2);
                                 Style style = inputArea.addStyle("Red", null);
                                 StyleConstants.setForeground(style, Color.RED);
                                 inputArea.getStyledDocument().setCharacterAttributes(
-                                    Integer.parseInt(absoluteCharacter)-2,
-                                    3,
+                                    Integer.parseInt(absoluteCharacter)-3,
+                                    4,
                                     inputArea.getStyle("Red"),
                                     true
                                 );
@@ -147,8 +146,9 @@ public class JsonViewGUI extends JFrame {
 
     private void updateOutline(Object jsonObject) {
         this.currentJson = jsonObject;
-        OutlineModel outlineModel =  DefaultOutlineModel.createOutlineModel(new JsonTreeModel(new JSONHolder("ROOT", jsonObject)), new JsonRowModel(this), false, "Key");
+        OutlineModel outlineModel =  JsonOutlineModel.createJsonOutlineModel(new JsonTreeModel(new JSONHolder("ROOT", jsonObject)), new JsonRowModel(this), this);
         Outline rootOutline = new Outline(outlineModel);
+        rootOutline.setRenderDataProvider(new JsonRenderDataProvider());
         viewPort.add(rootOutline);
     }
 

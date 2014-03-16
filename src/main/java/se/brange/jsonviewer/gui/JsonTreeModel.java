@@ -37,7 +37,6 @@ public class JsonTreeModel implements TreeModel {
             for (String s : (Set<String>)jsonObject.keySet()) {
                 if (count == i) {
                     final Object o1 = jsonObject.get(s);
-//                    jsonObject.get
                     if (o1 instanceof JSONObject || o1 instanceof JSONArray) {
                         return new JSONHolder(s, o1);
                     }

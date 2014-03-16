@@ -29,7 +29,6 @@ public class JSONValue {
     }
 
     public void setValue(Object value) {
-        System.out.println("value.getClass() = " + value.getClass());
         this.value = value;
     }
 
@@ -51,5 +50,9 @@ public class JSONValue {
             return Integer.toString(index);
         }
         return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }
