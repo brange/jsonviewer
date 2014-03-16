@@ -8,7 +8,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="afb65" class="javax.swing.JTextArea" binding="inputArea" custom-create="true">
+      <component id="afb65" class="javax.swing.JTextPane" binding="inputArea" custom-create="true">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <minimum-size width="-1" height="200"/>
