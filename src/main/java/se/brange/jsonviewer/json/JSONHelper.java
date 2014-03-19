@@ -12,10 +12,18 @@ public class JSONHelper {
         OBJECT,
         BOOLEAN,
         ARRAY,
-        UNKOWN
+        UNKOWN;
+
+        @Override
+        public String toString() {
+            return getStringValue(this);
+        }
     }
 
     public static JSONValueType getType(Object object) {
+        if (object instanceof JSONValueType) {
+            return (JSONValueType)object;
+        }
         if (object instanceof JSONValue) {
             object = ((JSONValue)object).getValue();
         }

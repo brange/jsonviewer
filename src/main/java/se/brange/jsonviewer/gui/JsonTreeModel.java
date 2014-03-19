@@ -50,9 +50,7 @@ public class JsonTreeModel implements TreeModel {
 
     @Override
     public int getChildCount(Object o) {
-        if (o instanceof JSONHolder) {
-            o = ((JSONHolder)o).getRawObject();
-        }
+        o = JSONHelper.convertFromJSONHolder(o);
         if (o instanceof JSONArray) {
             return ((JSONArray)o).length();
         } else if (o instanceof JSONObject) {

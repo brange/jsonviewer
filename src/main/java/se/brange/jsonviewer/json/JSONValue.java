@@ -52,6 +52,10 @@ public class JSONValue {
         return key;
     }
 
+    public String asString() {
+        return "Key: " + toString() + ", Value: " + getValue();
+    }
+
     public void setKey(String key) {
         this.key = key;
     }
