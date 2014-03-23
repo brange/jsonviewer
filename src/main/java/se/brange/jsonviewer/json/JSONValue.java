@@ -40,6 +40,10 @@ public class JSONValue {
         return index;
     }
 
+    public String getKeyOrIndex() {
+        return toString();
+    }
+
     public JSONHelper.JSONValueType getType() {
         return JSONHelper.getType(value);
     }
