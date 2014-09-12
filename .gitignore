@@ -1,3 +1,6 @@
 target/
-.idea/
 atlassian-ide-plugin.xml
+# Intellij
+.idea/
+*.iml
+*.iws
