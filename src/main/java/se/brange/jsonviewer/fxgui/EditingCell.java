@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import org.controlsfx.dialog.Dialog;
 import org.json.JSONObject;
 import se.brange.jsonviewer.json.JSONHolder;
 import se.brange.jsonviewer.json.JSONValue;
@@ -100,8 +101,10 @@ public class EditingCell extends TreeTableCell<Object, Object> {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
                     final String newKey = textField.getText();
                     if (siblingKeys != null && siblingKeys.contains(newKey)) {
-                        //TODO-brange: Add a warning dialog.
-                        System.err.println("One sibling has the same key '" + newKey + "'");
+                        //TODO-brange: Make the dialog more beautiful.
+                        Dialog _dialog = new Dialog(null, "Error");
+                        _dialog.setContent("One sibling has the same key '" + newKey + "'.");
+                        _dialog.show();
                         cancelEdit();
                     } else {
                         commitEdit(newKey);
