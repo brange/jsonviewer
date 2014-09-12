@@ -71,7 +71,7 @@
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                             </rowConstraints>
-                            <children><CheckBox fx:id="searchKey" mnemonicParsing="false" selected="true" text="Key" GridPane.columnIndex="1" /><CheckBox fx:id="searchValue" mnemonicParsing="false" selected="true" text="Value" GridPane.columnIndex="2" /><CheckBox fx:id="searchType" mnemonicParsing="false" text="Type" GridPane.columnIndex="3" /><TextField fx:id="searchField" promptText="Search..." GridPane.columnIndex="4" />
+                            <children><CheckBox fx:id="searchKey" mnemonicParsing="false" selected="true" text="Key" GridPane.columnIndex="1" /><CheckBox fx:id="searchValue" mnemonicParsing="false" selected="true" text="Value" GridPane.columnIndex="2" /><CheckBox fx:id="searchType" mnemonicParsing="false" text="Type" GridPane.columnIndex="3" /><TextField fx:id="searchField" promptText="Search..." GridPane.columnIndex="4" /><Button id="copyButton" fx:id="copyButton" mnemonicParsing="false" text="Copy" />
                             </children>
                         </GridPane><TreeTableView fx:id="tableView" editable="true" prefHeight="132.0" prefWidth="558.0" tableMenuButtonVisible="true" GridPane.rowIndex="1" />
                     </children>
