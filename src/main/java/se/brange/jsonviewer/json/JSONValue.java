@@ -1,6 +1,8 @@
 package se.brange.jsonviewer.json;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class JSONValue {
     private String key;
@@ -29,7 +31,23 @@ public class JSONValue {
     }
 
     public void setValue(Object value) {
-        this.value = value;
+        Object _value;
+        if (value.equals("true") || value.equals("false")) {
+            _value = Boolean.parseBoolean(value.toString());
+        } else if(StringUtils.isNumeric(value.toString())) {
+            _value = Integer.parseInt(value.toString());
+        } else {
+            _value = value.toString();
+        }
+
+        this.value = _value;
+        if (parent instanceof JSONObject) {
+            ((JSONObject) parent).put(key, _value);
+        } else if (parent instanceof JSONArray) {
+            ((JSONArray)parent).put(index, _value);
+        } else {
+            System.err.println("Unkown class " + parent.getClass());
+        }
     }
 
     public Object getParent() {
