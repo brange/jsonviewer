@@ -1,17 +1,16 @@
 package se.brange.jsonviewer.fxgui;
 
-import java.awt.event.FocusEvent;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import org.controlsfx.dialog.Dialog;
+import org.controlsfx.dialog.Dialogs;
 import org.json.JSONObject;
 import se.brange.jsonviewer.json.JSONHolder;
 import se.brange.jsonviewer.json.JSONValue;
@@ -100,11 +99,13 @@ public class EditingCell extends TreeTableCell<Object, Object> {
     private TextField createTextField() {
         textField = new TextField(getString());
         textField.setMinWidth(this.getWidth() - this.getGraphicTextGap()* 2);
+        final AtomicReference<Boolean> hasCommited = new AtomicReference<Boolean>();
+        hasCommited.set(false);
         textField.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
-                    doChange();
+                    doChange(hasCommited);
                 }
             }
         });
@@ -112,7 +113,7 @@ public class EditingCell extends TreeTableCell<Object, Object> {
             @Override
             public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldProperty, Boolean newPropery) {
                 if (!newPropery) {
-                    doChange();
+                    doChange(hasCommited);
                 }
             }
         });
@@ -120,16 +121,22 @@ public class EditingCell extends TreeTableCell<Object, Object> {
         return textField;
     }
 
-    private void doChange() {
-        final String newKey = textField.getText();
-        if (siblingKeys != null && siblingKeys.contains(newKey)) {
-            //TODO-brange: Make the dialog more beautiful.
-            Dialog _dialog = new Dialog(null, "Error");
-            _dialog.setContent("One sibling has the same key '" + newKey + "'.");
-            _dialog.show();
-            cancelEdit();
-        } else {
-            commitEdit(newKey);
+    private void doChange(AtomicReference<Boolean> hasCommited) {
+        synchronized (hasCommited) {
+            if (hasCommited.get()) {
+                return;
+            }
+            hasCommited.set(true);
+            final String newKey = textField.getText();
+            if (siblingKeys != null && siblingKeys.contains(newKey)) {
+                Dialogs.create()
+                    .title("Error")
+                    .message("Another sibling has the same key '" + newKey + "'.")
+                    .showError();
+                cancelEdit();
+            } else {
+                commitEdit(newKey);
+            }
         }
     }
 
