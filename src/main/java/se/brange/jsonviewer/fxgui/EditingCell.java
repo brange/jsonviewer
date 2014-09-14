@@ -59,10 +59,11 @@ public class EditingCell extends TreeTableCell<Object, Object> {
 
         if (!isEmpty() && canEdit) {
             super.startEdit();
-            createTextField();
+            TextField _textField = createTextField();
             setText(null);
             setGraphic(textField);
             textField.selectAll();
+            _textField.requestFocus();
         }
     }
 
@@ -96,7 +97,7 @@ public class EditingCell extends TreeTableCell<Object, Object> {
         }
     }
 
-    private void createTextField() {
+    private TextField createTextField() {
         textField = new TextField(getString());
         textField.setMinWidth(this.getWidth() - this.getGraphicTextGap()* 2);
         textField.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
@@ -115,6 +116,8 @@ public class EditingCell extends TreeTableCell<Object, Object> {
                 }
             }
         });
+
+        return textField;
     }
 
     private void doChange() {
