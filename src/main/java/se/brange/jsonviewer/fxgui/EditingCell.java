@@ -131,6 +131,7 @@ public class EditingCell extends TreeTableCell<Object, Object> {
             if (siblingKeys != null && siblingKeys.contains(newKey)) {
                 Dialogs.create()
                     .title("Error")
+                    .masthead(null)
                     .message("Another sibling has the same key '" + newKey + "'.")
                     .showError();
                 cancelEdit();
