@@ -54,11 +54,23 @@ public class JSONHolder {
         return toString();
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public Integer getIndex() {
+        return index;
+    }
+
     public Object getParent() {
         return parent;
     }
 
     public Object getRawObject() {
         return json;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
     }
 }

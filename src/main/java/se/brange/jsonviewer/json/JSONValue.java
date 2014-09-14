@@ -81,4 +81,8 @@ public class JSONValue {
     public void setKey(String key) {
         this.key = key;
     }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
 }
