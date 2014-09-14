@@ -16,6 +16,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +62,14 @@ public class JsonViewer extends Application {
     private void setup() {
 
         treeTableView = (TreeTableView) scene.lookup("#tableView");
+        treeTableView.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                if (event.isMetaDown() && event.getText().equals("f")) {
+                    searcher.requestFocis();
+                }
+            }
+        });
         searcher = new Searcher(this);
         treeBuilder = new TreeBuilder(this);
 

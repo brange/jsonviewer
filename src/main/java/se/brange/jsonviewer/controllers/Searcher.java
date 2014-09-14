@@ -28,6 +28,13 @@ public class Searcher {
         setup();
     }
 
+    /**
+     * Request focus for the search field
+     */
+    public void requestFocis() {
+        this.searchField.requestFocus();
+    }
+
     private void addEventHandler(CheckBox... checkBoxes) {
         for (CheckBox checkBox : checkBoxes) {
             checkBox.addEventHandler(ActionEvent.ANY, new EventHandler<Event>() {
