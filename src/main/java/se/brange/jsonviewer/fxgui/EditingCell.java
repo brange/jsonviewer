@@ -1,7 +1,11 @@
 package se.brange.jsonviewer.fxgui;
 
+import java.awt.event.FocusEvent;
 import java.util.HashSet;
 import java.util.Set;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeTableCell;
@@ -99,19 +103,31 @@ public class EditingCell extends TreeTableCell<Object, Object> {
             @Override
             public void handle(KeyEvent keyEvent) {
                 if (keyEvent.getCode() == KeyCode.ENTER) {
-                    final String newKey = textField.getText();
-                    if (siblingKeys != null && siblingKeys.contains(newKey)) {
-                        //TODO-brange: Make the dialog more beautiful.
-                        Dialog _dialog = new Dialog(null, "Error");
-                        _dialog.setContent("One sibling has the same key '" + newKey + "'.");
-                        _dialog.show();
-                        cancelEdit();
-                    } else {
-                        commitEdit(newKey);
-                    }
+                    doChange();
                 }
             }
         });
+        textField.focusedProperty().addListener(new ChangeListener<Boolean>() {
+            @Override
+            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean oldProperty, Boolean newPropery) {
+                if (!newPropery) {
+                    doChange();
+                }
+            }
+        });
+    }
+
+    private void doChange() {
+        final String newKey = textField.getText();
+        if (siblingKeys != null && siblingKeys.contains(newKey)) {
+            //TODO-brange: Make the dialog more beautiful.
+            Dialog _dialog = new Dialog(null, "Error");
+            _dialog.setContent("One sibling has the same key '" + newKey + "'.");
+            _dialog.show();
+            cancelEdit();
+        } else {
+            commitEdit(newKey);
+        }
     }
 
     private String getString() {
