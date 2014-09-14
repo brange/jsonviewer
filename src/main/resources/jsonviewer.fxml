@@ -89,7 +89,12 @@
 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
 </rowConstraints>
 <children><TreeTableView fx:id="tableView" editable="true" prefHeight="132.0" prefWidth="558.0" tableMenuButtonVisible="true" /><VBox maxWidth="30.0" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
-<children><Button id="addButton" minWidth="30.0" mnemonicParsing="false" text="+" /><Button id="removeButton" minWidth="30.0" mnemonicParsing="false" text="-" /><Button id="upButton" minWidth="30.0" mnemonicParsing="false" text="↑" /><Button id="downButton" minWidth="30.0" mnemonicParsing="false" text="↓" />
+<children><MenuButton fx:id="addButton" mnemonicParsing="false" text="+">
+  <items>
+    <MenuItem fx:id="addButtonValue" mnemonicParsing="false" text="Value" />
+    <MenuItem fx:id="addButtonObject" mnemonicParsing="false" text="Object" /><MenuItem fx:id="addButtonArray" mnemonicParsing="false" text="Array" />
+  </items>
+</MenuButton><Button id="removeButton" minWidth="30.0" mnemonicParsing="false" text="-" /><Button id="upButton" minWidth="30.0" mnemonicParsing="false" text="↑" /><Button id="downButton" minWidth="30.0" mnemonicParsing="false" text="↓" />
 </children></VBox>
 </children>
 </GridPane>
